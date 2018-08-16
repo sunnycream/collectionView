@@ -11,7 +11,7 @@
 static NSString *cellID = @"cellID";
 static NSString *headerID = @"headerID";
 static NSString *footerID = @"footerID";
-@interface LLSystemViewController ()<UICollectionViewDataSource, UICollectionViewDelegate>
+@interface LLSystemViewController ()<UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
 
 @property (nonatomic, strong) UICollectionView *collectionView;
 @property (nonatomic, strong) UICollectionViewFlowLayout *layout;
@@ -60,9 +60,25 @@ static NSString *footerID = @"footerID";
     }
 }
 
-//#pragma amrk - UICollectionViewDelegate
+//是否允许移动item
+- (BOOL)collectionView:(UICollectionView *)collectionView canMoveItemAtIndexPath:(NSIndexPath *)indexPath {
+    return YES;
+}
+
+- (void)collectionView:(UICollectionView *)collectionView moveItemAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath *)destinationIndexPath {
+    
+}
+
+#pragma amrk - UICollectionViewDelegate
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+//    UICollectionViewCell *cell = (UICollectionViewCell *)[collectionView cellForItemAtIndexPath:indexPath];
+    
     NSLog(@"Happy~");
+}
+
+//是否允许点击item
+- (BOOL)collectionView:(UICollectionView *)collectionView shouldSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    return YES;
 }
 
 #pragma mark - UICollectionViewDelegateFlowLayout
@@ -110,6 +126,9 @@ static NSString *footerID = @"footerID";
     if (_layout == nil) {
         _layout = [[UICollectionViewFlowLayout alloc] init];
         _layout.scrollDirection = UICollectionViewScrollDirectionVertical;
+        //固定头/尾视图
+//        _layout.sectionHeadersPinToVisibleBounds = YES;
+//        _layout.sectionFootersPinToVisibleBounds = YES;
     }
     return _layout;
 }

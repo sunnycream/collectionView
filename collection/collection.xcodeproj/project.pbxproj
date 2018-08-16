@@ -117,10 +117,6 @@
 		8427F0A9212548E00061DAE8 /* Flow */ = {
 			isa = PBXGroup;
 			children = (
-				840A507120D36E1700D41E0D /* LLCircleViewController.h */,
-				840A507220D36E1700D41E0D /* LLCircleViewController.m */,
-				844D525820D2824100F348A3 /* CircleLayout.h */,
-				844D525920D2824100F348A3 /* CircleLayout.m */,
 				844D526120D290DF00F348A3 /* LLFlowViewController.h */,
 				844D526220D290DF00F348A3 /* LLFlowViewController.m */,
 				840A507420D3951B00D41E0D /* FlowLayout.h */,
@@ -132,6 +128,10 @@
 		8427F0AA212548FB0061DAE8 /* Circle */ = {
 			isa = PBXGroup;
 			children = (
+				840A507120D36E1700D41E0D /* LLCircleViewController.h */,
+				840A507220D36E1700D41E0D /* LLCircleViewController.m */,
+				844D525820D2824100F348A3 /* CircleLayout.h */,
+				844D525920D2824100F348A3 /* CircleLayout.m */,
 			);
 			path = Circle;
 			sourceTree = "<group>";
