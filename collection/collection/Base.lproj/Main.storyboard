@@ -23,8 +23,8 @@
                                 <rect key="frame" x="137.5" y="213.5" width="100" height="40"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="100" id="6bF-BE-REH"/>
                                     <constraint firstAttribute="height" constant="40" id="Gb4-fA-hcB"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="100" id="mmr-y7-1dS"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
                                 <state key="normal" title="system">
@@ -39,7 +39,7 @@
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="G8u-F3-5eu"/>
-                                    <constraint firstAttribute="width" constant="100" id="LbR-B7-LeG"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="100" id="V4u-Wm-uwp"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
                                 <state key="normal" title="custom">
@@ -54,7 +54,7 @@
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="UcM-Sv-4lV"/>
-                                    <constraint firstAttribute="width" constant="100" id="kHI-k7-aHq"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="100" id="Xg3-7s-Z56"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
                                 <state key="normal" title="flow">
@@ -68,7 +68,7 @@
                                 <rect key="frame" x="137.5" y="413.5" width="100" height="40"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="100" id="6T6-d9-TSe"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="100" id="Xkw-o4-aHg"/>
                                     <constraint firstAttribute="height" constant="40" id="cD0-dz-nd4"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
