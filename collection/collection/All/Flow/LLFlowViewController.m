@@ -22,6 +22,7 @@ static NSString *cellID = @"cellID";
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.view.backgroundColor = [UIColor whiteColor];
     //注册
     [self.collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:cellID];
 }
@@ -45,7 +46,7 @@ static NSString *cellID = @"cellID";
 #pragma mark - 懒加载
 - (UICollectionView *)collectionView {
     if (_collectionView == nil) {
-        _collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight) collectionViewLayout:self.layout];
+        _collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(10, 0, kScreenWidth - 20, kScreenHeight) collectionViewLayout:self.layout];
         _collectionView.backgroundColor = [UIColor whiteColor];
         _collectionView.dataSource = self;
         _collectionView.delegate = self;

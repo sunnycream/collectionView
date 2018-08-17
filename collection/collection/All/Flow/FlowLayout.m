@@ -20,7 +20,7 @@
     
     [self basecConfig];
     
-    CGFloat itemWidth = (kScreenWidth - (_columnSpacing * (_columnCount - 1))) / _columnCount;
+    CGFloat itemWidth = (kScreenWidth - 20 - (_columnSpacing * (_columnCount - 1))) / _columnCount;
     CGFloat itemHeight = 100;
 
     NSInteger itemCount = [self.collectionView numberOfItemsInSection:0];
