@@ -8,9 +8,6 @@
 
 #import "LLSystemViewController.h"
 
-static NSString *cellID = @"cellID";
-static NSString *headerID = @"headerID";
-static NSString *footerID = @"footerID";
 @interface LLSystemViewController ()<UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
 
 @property (nonatomic, strong) UICollectionView *collectionView;
@@ -22,11 +19,8 @@ static NSString *footerID = @"footerID";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    //注册
-    [self.collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:cellID];
-    [self.collectionView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:headerID];
-    [self.collectionView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:footerID];
+
+    [self.view addSubview:self.collectionView];
 }
 
 #pragma mark - UICollectionViewDataSource
@@ -39,6 +33,9 @@ static NSString *footerID = @"footerID";
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+    static NSString *cellID = @"cellID";
+
+    [collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:cellID];
     UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellID forIndexPath:indexPath];
     cell.backgroundColor = [UIColor colorWithRed:arc4random()%255/255.0 green:arc4random()%255/255.0 blue:arc4random()%255/255.0 alpha:1];
     
@@ -48,11 +45,16 @@ static NSString *footerID = @"footerID";
 //头尾视图
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
     if ([kind isEqualToString:UICollectionElementKindSectionHeader]) {
+        static NSString *headerID = @"headerID";
+
+        [collectionView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:headerID];
         UICollectionReusableView *headerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:headerID forIndexPath:indexPath];
         headerView.backgroundColor = [UIColor colorWithRed:arc4random()%255/255.0 green:arc4random()%255/255.0 blue:arc4random()%255/255.0 alpha:1];
 
         return headerView;
     } else {
+        static NSString *footerID = @"footerID";
+        [collectionView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:footerID];
         UICollectionReusableView *footerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:footerID forIndexPath:indexPath];
         footerView.backgroundColor = [UIColor colorWithRed:arc4random()%255/255.0 green:arc4random()%255/255.0 blue:arc4random()%255/255.0 alpha:1];
 
@@ -117,7 +119,7 @@ static NSString *footerID = @"footerID";
         _collectionView.backgroundColor = [UIColor whiteColor];
         _collectionView.dataSource = self;
         _collectionView.delegate = self;
-        [self.view addSubview:_collectionView];
+//        [self.view addSubview:_collectionView];
     }
     return _collectionView;
 }

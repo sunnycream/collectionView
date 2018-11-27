@@ -9,7 +9,6 @@
 #import "LLFlowViewController.h"
 #import "FlowLayout.h"
 
-static NSString *cellID = @"cellID";
 @interface LLFlowViewController ()<UICollectionViewDataSource, UICollectionViewDelegate>
 
 @property (nonatomic, strong) UICollectionView *collectionView;
@@ -22,9 +21,7 @@ static NSString *cellID = @"cellID";
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.view.backgroundColor = [UIColor whiteColor];
-    //注册
-    [self.collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:cellID];
+    [self.view addSubview:self.collectionView];
 }
 
 #pragma mark - UICollectionViewDataSource
@@ -37,6 +34,9 @@ static NSString *cellID = @"cellID";
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+    static NSString *cellID = @"cellID";
+
+    [collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:cellID];
     UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellID forIndexPath:indexPath];
     cell.backgroundColor = [UIColor colorWithRed:arc4random()%255/255.0 green:arc4random()%255/255.0 blue:arc4random()%255/255.0 alpha:1];
     
@@ -50,7 +50,6 @@ static NSString *cellID = @"cellID";
         _collectionView.backgroundColor = [UIColor whiteColor];
         _collectionView.dataSource = self;
         _collectionView.delegate = self;
-        [self.view addSubview:_collectionView];
     }
     return _collectionView;
 }
