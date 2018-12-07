@@ -9,29 +9,38 @@
 #import "CircleLayout.h"
 
 @implementation CircleLayout{
-    NSInteger _itemCount;
     NSMutableArray *_attributeArray;
 }
 
 - (void)prepareLayout {
     [super prepareLayout];
-    
-    _itemCount = [self.collectionView numberOfItemsInSection:0];
+
+     NSInteger itemCount = [self.collectionView numberOfItemsInSection:0];
     _attributeArray = [NSMutableArray array];
 
+    //半径
     CGFloat radius = MIN(kScreenWidth - 40, kScreenHeight) / 2;
+
+    //圆心
     CGPoint center = CGPointMake(kScreenWidth / 2, kScreenHeight / 2);
-    
-    for (int i = 0; i < _itemCount; i++) {
+//    CGPoint center = self.collectionView.center;
+
+    for (int i = 0; i < itemCount; i++) {
         NSIndexPath *indexPath = [NSIndexPath indexPathForItem:i inSection:0];
         UICollectionViewLayoutAttributes *attributes = [UICollectionViewLayoutAttributes layoutAttributesForCellWithIndexPath:indexPath];
+
+        //item大小
         attributes.size = CGSizeMake(60, 60);
 
-        //求出每个item的坐标
-        double x = center.x + cos(2 * M_PI / _itemCount * i) * (radius - 30);
-        double y = center.y + sin(2 * M_PI / _itemCount * i) * (radius-30);
+        if (itemCount == 1) {
+            attributes.center = self.collectionView.center;
+        } else {
+            //求出每个item的坐标
+            double x = center.x + cos(2 * M_PI / itemCount * i) * (radius - 30);
+            double y = center.y + sin(2 * M_PI / itemCount * i) * (radius - 30);
 
-        attributes.center = CGPointMake(x, y);
+            attributes.center = CGPointMake(x, y);
+        }
         [_attributeArray addObject:attributes];
     }
 }
