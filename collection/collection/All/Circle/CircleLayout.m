@@ -15,12 +15,12 @@
 - (void)prepareLayout {
     [super prepareLayout];
 
-     NSInteger itemCount = [self.collectionView numberOfItemsInSection:0];
     _attributeArray = [NSMutableArray array];
 
+    //item个数
+    NSInteger itemCount = [self.collectionView numberOfItemsInSection:0];
     //半径
     CGFloat radius = MIN(kScreenWidth - 40, kScreenHeight) / 2;
-
     //圆心
     CGPoint center = CGPointMake(kScreenWidth / 2, kScreenHeight / 2);
 //    CGPoint center = self.collectionView.center;
@@ -29,10 +29,11 @@
         NSIndexPath *indexPath = [NSIndexPath indexPathForItem:i inSection:0];
         UICollectionViewLayoutAttributes *attributes = [UICollectionViewLayoutAttributes layoutAttributesForCellWithIndexPath:indexPath];
 
+
         //item大小
         attributes.size = CGSizeMake(60, 60);
 
-        if (itemCount == 1) {
+        if (itemCount == 1) {//item只有一个的情况
             attributes.center = self.collectionView.center;
         } else {
             //求出每个item的坐标
