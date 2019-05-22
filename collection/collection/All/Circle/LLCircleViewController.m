@@ -25,7 +25,6 @@ static NSString *cellID = @"cellID";
 
     self.cellCount = 7;
     [self.collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:cellID];
-    [self.view addSubview:self.collectionView];
 
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapCollectionView:)];
     [self.collectionView addGestureRecognizer:tap];
@@ -74,17 +73,18 @@ static NSString *cellID = @"cellID";
 
 #pragma mark - 懒加载
 - (UICollectionView *)collectionView {
-    if (_collectionView == nil) {
+    if (!_collectionView) {
         _collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight) collectionViewLayout:self.circleLayout];
         _collectionView.backgroundColor = [UIColor whiteColor];
         _collectionView.dataSource = self;
         _collectionView.delegate = self;
+        [self.view addSubview:_collectionView];
     }
     return _collectionView;
 }
 
 - (CircleLayout *)circleLayout {
-    if (_circleLayout == nil) {
+    if (!_circleLayout) {
         _circleLayout = [[CircleLayout alloc] init];
     }
     return _circleLayout;

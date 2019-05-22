@@ -9,6 +9,9 @@
 #import "LLCustomViewController.h"
 #import "MyCell.h"
 
+static NSString *cellID = @"MyCell";
+static NSString *headerID = @"headerID";
+static NSString *footerID = @"footerID";
 @interface LLCustomViewController ()<UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
 
 @property (nonatomic, strong) UICollectionView *collectionView;
@@ -21,7 +24,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self.view addSubview:self.collectionView];
+    [self.collectionView registerClass:[MyCell class] forCellWithReuseIdentifier:cellID];
+    [self.collectionView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:headerID];
+    [self.collectionView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:footerID];
 }
 
 #pragma mark - UICollectionViewDataSource
@@ -34,51 +39,70 @@
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString *cellID = @"cellID";
-
-    [self.collectionView registerClass:[MyCell class] forCellWithReuseIdentifier:cellID];
     MyCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellID forIndexPath:indexPath];
-    cell.backgroundColor = [UIColor blackColor];
-    cell.myView.backgroundColor = [UIColor yellowColor];
-    cell.myLabel.backgroundColor = [UIColor yellowColor];
-    cell.myLabel.text = @"100";
-    
+//    cell.myLabel.frame = CGRectMake(0, 40, 120, 40);
+
     return cell;
 }
 
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
     if ([kind isEqualToString:UICollectionElementKindSectionHeader]) {
-        static NSString *headerID = @"headerID";
-
-        [collectionView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:headerID];
         UICollectionReusableView *headerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:headerID forIndexPath:indexPath];
-        headerView.backgroundColor = [UIColor yellowColor];
+        headerView.backgroundColor = [UIColor blackColor];
         
         return headerView;
     } else {
-        static NSString *footerID = @"footerID";
-
-        [collectionView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:footerID];
         UICollectionReusableView *footerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:footerID forIndexPath:indexPath];
-        footerView.backgroundColor = [UIColor yellowColor];
+        footerView.backgroundColor = [UIColor blackColor];
         
         return footerView;
     }
 }
 
+#pragma mark - UICollectionViewDelegateFlowLayout
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
+    CGFloat width = (kScreenWidth - 20 * 5) / 4;
+    return CGSizeMake(width, width);
+}
+
+//头视图大小
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section {
+    return CGSizeMake(kScreenWidth, 40);
+}
+
+//尾视图大小
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForFooterInSection:(NSInteger)section {
+    return CGSizeMake(kScreenWidth, 40);
+}
+
+//行间距
+- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section {
+    return 20;
+}
+
+//列间距
+- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section {
+    return 20;
+}
+
+- (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
+    return UIEdgeInsetsMake(20, 20, 20, 20);
+}
+
 #pragma mark - 懒加载
 - (UICollectionView *)collectionView {
-    if (_collectionView == nil) {
+    if (!_collectionView) {
         _collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight) collectionViewLayout:self.layout];
         _collectionView.backgroundColor = [UIColor whiteColor];
         _collectionView.dataSource = self;
         _collectionView.delegate = self;
+        [self.view addSubview:_collectionView];
     }
     return _collectionView;
 }
 
 - (UICollectionViewFlowLayout *)layout {
-    if (_layout == nil) {
+    if (!_layout) {
         _layout = [[UICollectionViewFlowLayout alloc] init];
         _layout.scrollDirection = UICollectionViewScrollDirectionVertical;
         _layout.itemSize = CGSizeMake(60, 60);

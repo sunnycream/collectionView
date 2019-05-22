@@ -8,6 +8,9 @@
 
 #import "LLSystemViewController.h"
 
+static NSString *cellID = @"cellID";
+static NSString *headerID = @"headerID";
+static NSString *footerID = @"footerID";
 @interface LLSystemViewController ()<UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
 
 @property (nonatomic, strong) UICollectionView *collectionView;
@@ -20,7 +23,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    [self.view addSubview:self.collectionView];
+    [self.collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:cellID];
+    [self.collectionView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:headerID];
+    [self.collectionView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:footerID];
 }
 
 #pragma mark - UICollectionViewDataSource
@@ -33,9 +38,6 @@
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString *cellID = @"cellID";
-
-    [collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:cellID];
     UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellID forIndexPath:indexPath];
     cell.backgroundColor = [UIColor colorWithRed:arc4random()%255/255.0 green:arc4random()%255/255.0 blue:arc4random()%255/255.0 alpha:1];
     
@@ -45,16 +47,11 @@
 //头尾视图
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
     if ([kind isEqualToString:UICollectionElementKindSectionHeader]) {
-        static NSString *headerID = @"headerID";
-
-        [collectionView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:headerID];
         UICollectionReusableView *headerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:headerID forIndexPath:indexPath];
         headerView.backgroundColor = [UIColor colorWithRed:arc4random()%255/255.0 green:arc4random()%255/255.0 blue:arc4random()%255/255.0 alpha:1];
 
         return headerView;
     } else {
-        static NSString *footerID = @"footerID";
-        [collectionView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:footerID];
         UICollectionReusableView *footerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:footerID forIndexPath:indexPath];
         footerView.backgroundColor = [UIColor colorWithRed:arc4random()%255/255.0 green:arc4random()%255/255.0 blue:arc4random()%255/255.0 alpha:1];
 
@@ -74,7 +71,7 @@
 #pragma amrk - UICollectionViewDelegate
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
 //    UICollectionViewCell *cell = (UICollectionViewCell *)[collectionView cellForItemAtIndexPath:indexPath];
-    
+
     NSLog(@"Happy~");
 }
 
@@ -86,6 +83,16 @@
 #pragma mark - UICollectionViewDelegateFlowLayout
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
     return CGSizeMake(arc4random()%100, arc4random()%100);
+}
+
+//头视图大小
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section {
+    return CGSizeMake(kScreenWidth, 40);
+}
+
+//尾视图大小
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForFooterInSection:(NSInteger)section {
+    return CGSizeMake(kScreenWidth, 40);
 }
 
 //行间距
@@ -102,30 +109,20 @@
     return UIEdgeInsetsMake(0, 20, 0, 20);
 }
 
-//头视图大小
-- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section {
-    return CGSizeMake(kScreenWidth, 40);
-}
-
-//尾视图大小
-- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForFooterInSection:(NSInteger)section {
-    return CGSizeMake(kScreenWidth, 40);
-}
-
 #pragma mark - 懒加载
 - (UICollectionView *)collectionView {
-    if (_collectionView == nil) {
+    if (!_collectionView) {
         _collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight) collectionViewLayout:self.layout];
         _collectionView.backgroundColor = [UIColor whiteColor];
         _collectionView.dataSource = self;
         _collectionView.delegate = self;
-//        [self.view addSubview:_collectionView];
+        [self.view addSubview:_collectionView];
     }
     return _collectionView;
 }
 
 - (UICollectionViewFlowLayout *)layout {
-    if (_layout == nil) {
+    if (!_layout) {
         _layout = [[UICollectionViewFlowLayout alloc] init];
         _layout.scrollDirection = UICollectionViewScrollDirectionVertical;
         //固定头/尾视图

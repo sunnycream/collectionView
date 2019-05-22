@@ -9,9 +9,9 @@
 #import "FlowLayout.h"
 
 @implementation FlowLayout {
-    NSInteger _columnCount;//列数
-    NSInteger _columnSpacing;//列间距
-    NSInteger _rowSpacing;//行间距
+    NSInteger _columnCount;     //列数
+    NSInteger _columnSpacing;   //列间距
+    NSInteger _rowSpacing;      //行间距
     NSMutableArray *_attributeArray;
 }
 

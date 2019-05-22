@@ -9,6 +9,7 @@
 #import "LLFlowViewController.h"
 #import "FlowLayout.h"
 
+static NSString *cellID = @"cellID";
 @interface LLFlowViewController ()<UICollectionViewDataSource, UICollectionViewDelegate>
 
 @property (nonatomic, strong) UICollectionView *collectionView;
@@ -20,8 +21,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    [self.view addSubview:self.collectionView];
+
+    [self.collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:cellID];
 }
 
 #pragma mark - UICollectionViewDataSource
@@ -34,9 +35,6 @@
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString *cellID = @"cellID";
-
-    [collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:cellID];
     UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellID forIndexPath:indexPath];
     cell.backgroundColor = [UIColor colorWithRed:arc4random()%255/255.0 green:arc4random()%255/255.0 blue:arc4random()%255/255.0 alpha:1];
     
@@ -45,17 +43,18 @@
 
 #pragma mark - 懒加载
 - (UICollectionView *)collectionView {
-    if (_collectionView == nil) {
+    if (!_collectionView) {
         _collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(10, 0, kScreenWidth - 20, kScreenHeight) collectionViewLayout:self.layout];
         _collectionView.backgroundColor = [UIColor whiteColor];
         _collectionView.dataSource = self;
         _collectionView.delegate = self;
+        [self.view addSubview:_collectionView];
     }
     return _collectionView;
 }
 
 - (FlowLayout *)layout {
-    if (_layout == nil) {
+    if (!_layout) {
         _layout = [[FlowLayout alloc] init];
     }
     return _layout;
